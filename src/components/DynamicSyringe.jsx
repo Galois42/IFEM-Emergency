@@ -158,9 +158,10 @@ const DynamicSyringe = ({ patientData, togglePhaseTracker }) => {
 
         <div className="absolute bottom-0 left-0 right-0 text-center text-gray-200">
           <p className="text-lg font-semibold mb-1 container-phase">
-            <span className='phase-status'>{formatStatus(patientData?.status)}</span>
-            <img src={InformationBubble} className='information-bubble' onClick={togglePhaseTracker}/>
-            
+            <span className='phase-status'>Status: {formatStatus(patientData?.status)}</span>
+            {window.innerWidth >= 1000 &&
+              <img src={InformationBubble} className='information-bubble' onClick={togglePhaseTracker}/>
+            }
           </p>
           <p className="text-sm bolded-color">
             Wait Time: {formatTime(currentWaitTime)}

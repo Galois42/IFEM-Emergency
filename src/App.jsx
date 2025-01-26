@@ -193,7 +193,7 @@ const App = () => {
           onClick={fetchPatientData}
           className="button"
         >
-          {patientData ? 'Refresh' : 'Submit'}
+          Submit
         </button>
         {error && <p className="error">{error}</p>}
         </div>
@@ -239,9 +239,9 @@ const App = () => {
           <div>
             <div className="main-header" style={{ display: displayMainPage ? 'block' : 'none' }}>
               <div className="heart-logo" style={{ display: displayMainPage ? 'block' : 'none' }}>
-                <Heart size={48} fill="#ff6b6b" stroke="#ff6b6b" />
+                <Heart size={96} fill="#ff6b6b" stroke="#ff6b6b" />
               </div>
-              <h1 className="title" style={{ display: displayMainPage ? 'block' : 'none' }}>SerenED</h1>
+              <h1 className="title" style={{ display: displayMainPage ? 'block' : 'none', fontSize: '3rem' }}>SerenED</h1>
             </div>
           </div>
       {playingGame &&
@@ -285,7 +285,7 @@ const App = () => {
           {matchStatus}
         </p>
       )}
-      {phaseTracker &&
+      {phaseTracker && window.innerWidth >= 1000 &&
         <PhaseTracker currentPhase={patientData.status.current_phase} />
       }
     </div>

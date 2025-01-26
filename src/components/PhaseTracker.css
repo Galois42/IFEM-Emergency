@@ -4,6 +4,11 @@
     justify-content: space-evenly;
     align-items: center;
     padding: 20px;
+    background: linear-gradient(135deg, #ffe5e5 0%, #fff1f1 50%, #ffe5e5 100%);
+    border-radius: 50px;
+    border: 2px solid #ff4b6b;
+    z-index: 1001;
+    position: relative;
   }
   
   .phase-circle {
@@ -16,10 +21,9 @@
     background-color: #ffb3b3;
     color: #fff;
     text-align: center;
-    cursor: pointer;
     font-size: 12px;
     transition: transform 0.3s ease-in-out;
-    margin: 10px;
+    margin: 20px;
   }
   
   .phase-circle.active {

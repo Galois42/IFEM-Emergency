@@ -29,7 +29,6 @@ const PhaseTracker: React.FC<PhaseTrackerProps> = ({ currentPhase }) => {
             style={{
               transform: isActive ? 'scale(1.5)' : 'scale(1)',
               transition: 'transform 0.3s ease-in-out',
-              zIndex: 10000
             }}
           >
             <p className="phase-label">{phase.label}</p>

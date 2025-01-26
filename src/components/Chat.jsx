@@ -37,7 +37,7 @@ const Chat = ({ socket, matchId }) => {
   return (
     <div className="chat-container">
       <div className="chat-header">
-        <h2>Chat with your match</h2>
+        <h2 style={{ color:"#ff4b6b" }} >Chat with your match!</h2>
       </div>
 
       <div className="chat-box">
