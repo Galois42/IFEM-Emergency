@@ -69,6 +69,43 @@
   margin-top: 20px;
 }
 
+.left-container {
+  position: relative;
+  transition: transform 0.3s ease-in-out;
+}
+
+.menu {
+  display: none; /* Initially hidden */
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: scale(0.5);
+  z-index: 1000;
+}
+
+.menu.open {
+  display: block; /* Display when open */
+}
+
+@media (max-width: 900px) {
+  .left-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .menu {
+    display: none; /* Ensure menu is hidden for mobile portrait */
+  }
+}
+
+@media (max-width: 900px) and (orientation: landscape) {
+  .menu {
+    display: block;
+  }
+}
+
+
 @media (max-width: 768px) {
   .activity-grid {
     grid-template-columns: 1fr;

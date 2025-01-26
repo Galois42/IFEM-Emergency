@@ -3,10 +3,10 @@ import MiniGame from './components/Minigame';
 import LandscapeWarning from './components/LandscapeWarning';
 import ChooseCharacter from './components/ChooseCharacter';
 import EndPage from './components/EndPage';
+import Chat from './components/Chat';
+import Menu from './assets/menu.png';
 import io from 'socket.io-client';
 import './App.css';
-
-const socket = io('http://localhost:5000');
 
 const App = () => {
   const [patientId, setPatientId] = useState('');
@@ -14,12 +14,16 @@ const App = () => {
   const [error, setError] = useState('');
   const [matchStatus, setMatchStatus] = useState('');
   const [playingGame, setPlayingGame] = useState(false);
+  const [chatting, setChatting] = useState(false);
 
   const [isStarted, setIsStarted] = useState(false);
   const [hairColor, setHairColor] = useState('Red');
   const [isLandscape, setIsLandscape] = useState(window.innerWidth > window.innerHeight);
   const [isEnd, setIsEnd] = useState(false);
   const [endResult, setEndResult] = useState('');
+  const [isVisible, setIsVisible] = useState(window.innerWidth >= 900);
+  const [socket, setSocket] = useState(null);
+
   
     const handleResize = () => {
       setIsLandscape(window.innerWidth > window.innerHeight);
@@ -50,13 +54,41 @@ const App = () => {
 
   }
 
+  const handleBurgerClick = () => {
+    if (isLandscape) {
+      console.log("openMenu");
+      setIsVisible(!isVisible);
+    }
+  };
+
   useEffect(() => {
-    socket.on('match_found', (data) => {
-      setMatchStatus(`Match found! Starting ${data.activity}`);
+    const socketInstance = io("http://localhost:5000");
+
+    // Listen for match found event
+    socketInstance.on("match_found", (data) => {
+      setMatchStatus(`Match found! Activity: ${data.activity}`);
+      if (data.activity === 'chat') {
+        setChatting(true);
+      }
+      
     });
 
-    return () => socket.off('match_found');
+    // Save the socket instance
+    setSocket(socketInstance);
+    console.log(socketInstance);
+
+    return () => {
+      socketInstance.disconnect();
+    };
   }, []);
+
+  // useEffect(() => {
+  //   socket.on('match_found', (data) => {
+  //     setMatchStatus(`Match found! Starting ${data.activity}`);
+  //   });
+
+  //   return () => socket.off('match_found');
+  // }, []);
 
   const fetchPatientData = async () => {
     try {
@@ -71,21 +103,27 @@ const App = () => {
 
   const findMatch = (activity) => {
     setMatchStatus('Looking for a match...');
+    console.log(activity);
     socket.emit('find_match', activity);
   };
 
   const playGame = () => {
     console.log('play game');
     setPlayingGame(true);
+    if (window.innerWidth <= 900) {
+      setIsVisible(false);
+    }
   }
 
   return (
     <div className='screen-container'>
-      <div className="left-container">
+      <div className='menu'>
+        <img src={Menu} onClick={handleBurgerClick}></img>
+      </div>
+      <div className="left-container" style={{ display: isVisible ? 'block' : 'none' }}>
         <header className="header">
           <h1 className="title">ED Companion</h1>
         </header>
-
         {!patientData ? (
           <div className="input-container">
             <input
@@ -157,6 +195,9 @@ const App = () => {
             )}
           </div>
         )
+      }
+      {chatting &&
+        <Chat />
       }
     </div>
     </div>

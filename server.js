@@ -43,6 +43,7 @@ io.on("connection", (socket) => {
   });
 
   socket.on("find_match", (activity) => {
+    console.log(activeUsers);
     const userData = activeUsers.get(socket.id);
     if (!userData) return;
 
@@ -51,7 +52,7 @@ io.on("connection", (socket) => {
       return (
         id !== socket.id &&
         Math.abs(user.triageCategory - userData.triageCategory) <= 1 &&
-        Math.abs(user.timeElapsed - userData.timeElapsed) <= 30
+        Math.abs(user.timeElapsed - userData.timeElapsed) <= 200
       );
     });
 
