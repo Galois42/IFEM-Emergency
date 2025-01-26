@@ -1,0 +1,7 @@
+.flipped {
+  transform: scaleX(-1);
+}
+
+.default {
+  transform: scaleX(1);
+}
