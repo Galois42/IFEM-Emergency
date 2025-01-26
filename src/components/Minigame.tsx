@@ -57,9 +57,15 @@ const MiniGame: React.FC<MiniGameProps> = ({ hairColor, onEnd }) => {
       return () => clearInterval(interval);
     }, [player.isAttacking, attackIngFrame]);
 
+  const handleOnEnd = (result: string) => {
+    setPlayer({ health: 100, hairColor: hairColor, position: -100, currentFrame: 0, isAttacking: false, isFlipped: false });
+    setEnemy({ health: 100, isDamaged: false, position: window.innerWidth <= 900 ? window.innerWidth / 6 * 4 : window.innerWidth / 2 });
+    onEnd(result);
+  }
+
   const handleAttack = () => {
     if (enemy.health - 10 <= 0) {
-        onEnd('win');
+        handleOnEnd('Win');
     } 
     setPlayer((prevState) => ({
       ...prevState,
@@ -105,7 +111,7 @@ const MiniGame: React.FC<MiniGameProps> = ({ hairColor, onEnd }) => {
     console.log("move left");
     if (enemy.position >= player.position && Math.abs(enemy.position - (player.position - 50)) >= 90 && Math.abs(enemy.position - (player.position - 50)) <= 200) {
         if (player.health - 3 <= 0) {
-            onEnd('Lost');
+            handleOnEnd('Lost');
         }
         setPlayer((prevState) => ({
           ...prevState,
@@ -125,7 +131,7 @@ const MiniGame: React.FC<MiniGameProps> = ({ hairColor, onEnd }) => {
     console.log('move right');
     if (enemy.position >= player.position && Math.abs(enemy.position - (player.position + 50)) >= 90 && Math.abs(enemy.position - (player.position + 50)) <= 200) {
         if (player.health - 3 <= 0) {
-            onEnd('Lost');
+            handleOnEnd('Lost');
         }
         setPlayer((prevState) => ({
           ...prevState,

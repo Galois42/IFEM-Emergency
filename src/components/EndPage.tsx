@@ -7,18 +7,8 @@ interface EndPageProps {
 }
 
 const EndPage: React.FC<EndPageProps> = ({ onExit, onRestart, result }) => {
-    const [endTitle, setEndTitle] = useState<string>('');
-    const [endMessage, setEndMessage] = useState<string>('');
-
-    useEffect(() => {
-        if (result === 'Win') {
-            setEndTitle('You Win!');
-            setEndMessage('Congratulations!');
-        } else if (result === 'Lost') {
-            setEndTitle('You Lost...');
-            setEndMessage('Better luck next time.');
-        }
-    }, []);
+    const [endTitle, setEndTitle] = useState<string>(result === 'Win' ? 'You Win!' : 'You Lost...');
+    const [endMessage, setEndMessage] = useState<string>(result === 'Win' ? 'Congratulations!' : 'Better luck next time.');
 
   return (
     <div
@@ -27,9 +17,11 @@ const EndPage: React.FC<EndPageProps> = ({ onExit, onRestart, result }) => {
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        height: '100vh',
+        height: '70vh',
+        width: '70vw',
         backgroundColor: '#f8f8f8',
-        color: '#333',
+        color: 'black',
+        borderRadius: '50px',
       }}
     >
       <h1>{endTitle}</h1>
@@ -37,7 +29,7 @@ const EndPage: React.FC<EndPageProps> = ({ onExit, onRestart, result }) => {
         style={{
           marginBottom: '20px',
           fontSize: '24px',
-          color: 'green',
+          color: 'black',
           fontWeight: 'bold',
         }}
       >

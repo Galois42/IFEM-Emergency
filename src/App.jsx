@@ -4,6 +4,7 @@ import LandscapeWarning from './components/LandscapeWarning';
 import ChooseCharacter from './components/ChooseCharacter';
 import EndPage from './components/EndPage';
 import Chat from './components/Chat';
+import DynamicSyringe from './components/DynamicSyringe';
 import Menu from './assets/menu.png';
 import io from 'socket.io-client';
 import './App.css';
@@ -15,6 +16,7 @@ const App = () => {
   const [matchStatus, setMatchStatus] = useState('');
   const [playingGame, setPlayingGame] = useState(false);
   const [chatting, setChatting] = useState(false);
+  const [matchId, setMatchId] = useState(null);
 
   const [isStarted, setIsStarted] = useState(false);
   const [hairColor, setHairColor] = useState('Red');
@@ -23,7 +25,6 @@ const App = () => {
   const [endResult, setEndResult] = useState('');
   const [isVisible, setIsVisible] = useState(window.innerWidth >= 900);
   const [socket, setSocket] = useState(null);
-
   
     const handleResize = () => {
       setIsLandscape(window.innerWidth > window.innerHeight);
@@ -47,11 +48,15 @@ const App = () => {
   }
 
   const onExit = () => {
-
+    setPlayingGame(false);
+    setIsVisible(true);
+    setIsEnd(false);
+    setIsStarted(false);
   }
 
   const onRestart = () => {
-
+    setIsEnd(false);
+    setIsStarted(false);
   }
 
   const handleBurgerClick = () => {
@@ -66,38 +71,40 @@ const App = () => {
 
     // Listen for match found event
     socketInstance.on("match_found", (data) => {
-      setMatchStatus(`Match found! Activity: ${data.activity}`);
+      setMatchStatus('');
       if (data.activity === 'chat') {
         setChatting(true);
+        setMatchId(data.matchId);
       }
-      
+    });
+
+    socketInstance.on('patient_update', (updatedData) => {
+      setPatientData(updatedData);
     });
 
     // Save the socket instance
     setSocket(socketInstance);
-    console.log(socketInstance);
+    // console.log(socketInstance);
 
     return () => {
       socketInstance.disconnect();
     };
   }, []);
 
-  // useEffect(() => {
-  //   socket.on('match_found', (data) => {
-  //     setMatchStatus(`Match found! Starting ${data.activity}`);
-  //   });
-
-  //   return () => socket.off('match_found');
-  // }, []);
-
   const fetchPatientData = async () => {
     try {
       const response = await fetch(`http://localhost:5000/api/patient/${patientId}`);
+      if (!response.ok) {
+        console.log(response);
+        throw new Error('Patient not found');
+      }
       const data = await response.json();
       setPatientData(data);
       socket.emit('register', data);
-    } catch (err) {
-      setError('Error fetching patient data');
+      setError('');
+    } catch (error) {
+      setError(error.message || 'Error fetching patient data');
+      setPatientData(null);
     }
   };
 
@@ -124,61 +131,57 @@ const App = () => {
         <header className="header">
           <h1 className="title">ED Companion</h1>
         </header>
-        {!patientData ? (
-          <div className="input-container">
-            <input
-              type="text"
-              placeholder="Enter Patient ID"
-              value={patientId}
-              onChange={(e) => setPatientId(e.target.value)}
-              className="input-field"
-            />
-            <button 
-              onClick={fetchPatientData}
-              className="button"
-            >
-              Submit
-            </button>
-            {error && <p className="error">{error}</p>}
-          </div>
-        ) : (
-          <div className="input-container">
-            <div style={{marginBottom: '20px'}}>
-              <p>Triage Category: {patientData.triage_category}</p>
-              <p>Wait Time: {patientData.time_elapsed} minutes</p>
-              <p>Status: {patientData.status.current_phase}</p>
-            </div>
+
+        <div className="input-container">
+        <input
+          type="text"
+          placeholder="Enter Patient ID"
+          value={patientId}
+          onChange={(e) => setPatientId(e.target.value)}
+          className="input-field"
+        />
+        <button 
+          onClick={fetchPatientData}
+          className="button"
+        >
+          {patientData ? 'Refresh' : 'Submit'}
+        </button>
+        {error && <p className="error">{error}</p>}
+        </div>
+
+        {patientData && (
+          <>
+            <div className="input-container">
+              <DynamicSyringe patientData={patientData} />
+            </div>        
 
             <div className="activity-grid">
               <button
                 onClick={() => findMatch('chat')}
                 className="button"
-                style={{backgroundColor: '#0066cc'}}
+                style={{ backgroundColor: '#0066cc' }}
               >
                 Find Chat Partner
               </button>
               <button
                 onClick={() => playGame()}
                 className="button"
-                style={{backgroundColor: '#00cc66'}}
+                style={{ backgroundColor: '#00cc66' }}
               >
                 Play a Game
               </button>
               <button
                 onClick={() => findMatch('music')}
                 className="button"
-                style={{backgroundColor: '#cc00cc'}}
+                style={{ backgroundColor: '#cc00cc' }}
               >
                 Music Suggestions
               </button>
-            </div>
-
-            {matchStatus && (
-              <p style={{textAlign: 'center', marginTop: '20px'}}>{matchStatus}</p>
-            )}
-          </div>
+            </div>        
+          </>
         )}
-      </div>
+        </div>
+
       <div className="app-container">
       {playingGame &&
         (
@@ -197,8 +200,27 @@ const App = () => {
         )
       }
       {chatting &&
-        <Chat />
+        <Chat socket={socket} matchId={matchId} />
       }
+      {matchStatus && (
+        <p
+          style={{
+            textAlign: "center",
+            marginTop: "20px",
+            padding: "10px 20px",
+            backgroundColor: "#f9f9f9",
+            color: "#333",
+            borderRadius: "8px",
+            boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
+            fontSize: "16px",
+            fontWeight: "bold",
+            maxWidth: "400px",
+            margin: "20px auto",
+          }}
+        >
+          {matchStatus}
+        </p>
+      )}
     </div>
     </div>
   );
