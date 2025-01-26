@@ -5,9 +5,11 @@ import ChooseCharacter from './components/ChooseCharacter';
 import EndPage from './components/EndPage';
 import Chat from './components/Chat';
 import DynamicSyringe from './components/DynamicSyringe';
-import Menu from './assets/menu.png';
+import BlackMenu from './assets/black_menu.png';
+import WhiteMenu from './assets/white_menu.png';
 import io from 'socket.io-client';
 import './App.css';
+import BreathingGuide from './components/BreathingGuide';
 
 const App = () => {
   const [patientId, setPatientId] = useState('');
@@ -16,6 +18,7 @@ const App = () => {
   const [matchStatus, setMatchStatus] = useState('');
   const [playingGame, setPlayingGame] = useState(false);
   const [chatting, setChatting] = useState(false);
+  const [breathingExercice, setBreathingExercice] = useState(false);
   const [matchId, setMatchId] = useState(null);
 
   const [isStarted, setIsStarted] = useState(false);
@@ -60,10 +63,8 @@ const App = () => {
   }
 
   const handleBurgerClick = () => {
-    if (isLandscape) {
-      console.log("openMenu");
-      setIsVisible(!isVisible);
-    }
+    console.log("openMenu");
+    setIsVisible(!isVisible);
   };
 
   useEffect(() => {
@@ -72,9 +73,13 @@ const App = () => {
     // Listen for match found event
     socketInstance.on("match_found", (data) => {
       setMatchStatus('');
+      
       if (data.activity === 'chat') {
         setChatting(true);
         setMatchId(data.matchId);
+        setPlayingGame(false);
+        setBreathingExercice(false);
+        setIsVisible(false);
       }
     });
 
@@ -111,23 +116,45 @@ const App = () => {
   const findMatch = (activity) => {
     setMatchStatus('Looking for a match...');
     console.log(activity);
+    setBreathingExercice(false);
+    setChatting(false);
+    setPlayingGame(false);
+    setIsVisible(false);
     socket.emit('find_match', activity);
   };
+
+  const breathingGuide = () => {
+    console.log("breathing");
+    setBreathingExercice(true);
+    setChatting(false);
+    setPlayingGame(false);
+    setIsVisible(false);
+  }
 
   const playGame = () => {
     console.log('play game');
     setPlayingGame(true);
-    if (window.innerWidth <= 900) {
-      setIsVisible(false);
-    }
+    setMatchStatus('');
+    setChatting(false);
+    setBreathingExercice(false);
+    setIsVisible(false);
   }
 
   return (
     <div className='screen-container'>
       <div className='menu'>
-        <img src={Menu} onClick={handleBurgerClick}></img>
+        <img src={isVisible ? WhiteMenu : BlackMenu} onClick={handleBurgerClick}></img>
       </div>
-      <div className="left-container" style={{ display: isVisible ? 'block' : 'none' }}>
+      <div className="left-container" 
+      style={{
+        display: isVisible ? 'block' : 'none', 
+        position: 'fixed',  // Use fixed to keep the bar in a fixed position on the screen
+        top: 0, 
+        left: 0, 
+        height: '100%', 
+        width: '400px', // Adjust width as needed
+        zIndex: 1000 // Ensure it's above other content
+      }}>
         <header className="header">
           <h1 className="title">ED Companion</h1>
         </header>
@@ -171,11 +198,11 @@ const App = () => {
                 Play a Game
               </button>
               <button
-                onClick={() => findMatch('music')}
+                onClick={() => breathingGuide()}
                 className="button"
                 style={{ backgroundColor: '#cc00cc' }}
               >
-                Music Suggestions
+                Breathing Exercices
               </button>
             </div>        
           </>
@@ -201,6 +228,9 @@ const App = () => {
       }
       {chatting &&
         <Chat socket={socket} matchId={matchId} />
+      }
+      {breathingExercice &&
+        <BreathingGuide />
       }
       {matchStatus && (
         <p

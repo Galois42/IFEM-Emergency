@@ -31,7 +31,8 @@ app.get("/api/patient/:id", async (req, res) => {
     
     // Find the specific patient in the queue
     // const patient = queueData.patients.find(p => p.id === req.params.id);
-    const patient = queueData.patients[0];
+    console.log(queueData);
+    const patient = queueData.patients[Math.floor(Math.random() * 24) + 1];
     
     if (patient) {
       // Format the patient data

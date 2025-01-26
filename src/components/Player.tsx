@@ -115,7 +115,7 @@ const Player: React.FC<PlayerProps> = ({ hairColor, position, currentFrame, heal
         style={{
           position: 'absolute',
           top: '10px',
-          left: '10px',
+          left: '60px',
           display: 'flex',
           alignItems: 'center',
           gap: '10px',

@@ -21,6 +21,7 @@ import BlackKnightWalk05 from '../assets/Knight_walk/black/Knight_walk_05.png';
 import BlackKnightWalk06 from '../assets/Knight_walk/black/Knight_walk_06.png';
 
 import './Player.css';
+import './ChooseCharacter.css';
 
 const RedKnightFrames = [
   RedKnightWalk01, 
@@ -75,22 +76,49 @@ const ChooseCharacter: React.FC<ChooseCharacterProps> = ({ onStartGame }) => {
       <div className="player-container" style={{ width: '100%' }}>
         <div style={{ display: 'flex', justifyContent: 'center', gap: '20px', marginBottom: '20px' }}>
             <div>
+              <img 
+                className='image-choice'
+                src={RedKnightWalk01} 
+                alt="Red Hair" 
+                style={{
+                  cursor: 'pointer',
+                  width: '256px',
+                  height: '128px',
+                  borderRadius: '50px',
+                  border: '2px solid black',
+                  margin: '2px',
+                  boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.2)', // Add shadow
+                }}
+                onClick={() => handleHairColorChange(RedKnightFrames, 'Red')} 
+              />
                 <img 
-                  src={RedKnightWalk01} 
-                  alt="Red Hair" 
-                  style={{ cursor: 'pointer', width: '256px', height: '128px' }}
-                  onClick={() => handleHairColorChange(RedKnightFrames, 'Red')} 
-                />
-                <img 
+                  className='image-choice'
                   src={BlondKnightWalk01} 
                   alt="Blond Hair" 
-                  style={{ cursor: 'pointer', width: '256px', height: '128px' }}
+                  style={{
+                    cursor: 'pointer',
+                    width: '256px',
+                    height: '128px',
+                    borderRadius: '50px',
+                    border: '2px solid black',
+                    margin: '2px',
+                    boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.2)', // Add shadow
+                  }}
                   onClick={() => handleHairColorChange(BlondKnightFrames, 'Blond')} 
                 />
                 <img 
+                  className='image-choice'
                   src={BlackKnightWalk01} 
                   alt="Black Hair" 
-                  style={{ cursor: 'pointer', width: '256px', height: '128px' }}
+                  style={{
+                    cursor: 'pointer',
+                    width: '256px',
+                    height: '128px',
+                    borderRadius: '50px',
+                    border: '2px solid black',
+                    margin: '2px',
+                    boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.2)', // Add shadow
+                  }}
                   onClick={() => handleHairColorChange(BlackKnightFrames, 'Black')} 
                 />
             </div>
