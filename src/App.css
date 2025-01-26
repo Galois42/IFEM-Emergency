@@ -1,0 +1,72 @@
+/* src/App.css */
+.app-container {
+  min-height: 100vh;
+  padding: 20px;
+  background-color: #1a1a1a;
+  color: white;
+}
+
+.header {
+  background-color: #242424;
+  padding: 16px;
+  border-bottom: 2px solid #0066cc;
+  margin-bottom: 20px;
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #0066cc;
+  text-align: center;
+}
+
+.input-container {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #242424;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.input-field {
+  width: 100%;
+  padding: 8px 16px;
+  margin-bottom: 16px;
+  border: 1px solid #0066cc;
+  border-radius: 4px;
+  background-color: #1a1a1a;
+  color: white;
+}
+
+.button {
+  width: 100%;
+  padding: 8px 16px;
+  background-color: #0066cc;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.button:hover {
+  background-color: #0052a3;
+}
+
+.error {
+  color: #ff4444;
+  margin-top: 8px;
+}
+
+.activity-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-top: 20px;
+}
+
+@media (max-width: 768px) {
+  .activity-grid {
+    grid-template-columns: 1fr;
+  }
+}
