@@ -1,7 +1,10 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 
-const DynamicSyringe = ({ patientData }) => {
+import InformationBubble from '../assets/information_bubble.png';
+import './DynamicSyringe.css';
+
+const DynamicSyringe = ({ patientData, togglePhaseTracker }) => {
   const [fillPercentage, setFillPercentage] = useState(0);
   const [liquidWobble, setLiquidWobble] = useState(0);
   const [currentWaitTime, setCurrentWaitTime] = useState(0);
@@ -60,16 +63,23 @@ const DynamicSyringe = ({ patientData }) => {
   };
 
   const formatTime = (minutes) => {
-    const hrs = Math.floor(minutes / 60);
-    const mins = Math.floor(minutes % 60);
-    const secs = Math.floor((minutes * 60) % 60);
-    
-    if (hrs > 0) {
-      return `${hrs}h ${mins}m`;
-    } else {
-      return `${mins}m ${secs}s`;
-    }
+    const mins = Math.floor(minutes);
+
+    return `${mins} min`;
   };
+
+  const numberFormat = (number) => {
+    if (number % 10 === 1) {
+      return number + 'st';
+    }
+    if (number % 10 === 2) {
+      return number + 'nd';
+    }
+    if (number % 10 === 3) {
+      return number + 'rd';
+    }
+    return number + 'th';
+  }
 
   const formatStatus = (status) => {
     if (!status) return 'Unknown';
@@ -97,6 +107,8 @@ const DynamicSyringe = ({ patientData }) => {
         102,${fluidHeight} Z
     `;
   };
+
+  
 
   return (
     <div className="w-full max-w-xl mx-auto p-8">
@@ -142,22 +154,25 @@ const DynamicSyringe = ({ patientData }) => {
             strokeWidth="1"
           />
         </svg>
+        
 
         <div className="absolute bottom-0 left-0 right-0 text-center text-gray-200">
-          <p className="text-lg font-semibold mb-1">
-            {formatStatus(patientData?.status)}
+          <p className="text-lg font-semibold mb-1 container-phase">
+            <span className='phase-status'>{formatStatus(patientData?.status)}</span>
+            <img src={InformationBubble} className='information-bubble' onClick={togglePhaseTracker}/>
+            
           </p>
-          <p className="text-sm">
+          <p className="text-sm bolded-color">
             Wait Time: {formatTime(currentWaitTime)}
-            {` / Est. ${ESTIMATED_WAIT_TIMES[patientData?.triage_category]} min`}
+            {` / Average ${ESTIMATED_WAIT_TIMES[patientData?.triage_category]} min`}
           </p>
-          <p className="text-xs">
-            Queue Position: {patientData?.queue_position?.global || '-'}
+          <p className="text-xs bolded-color">
+            Queue Position: {numberFormat(patientData?.queue_position?.global || '-')} overall
             {patientData?.queue_position?.category && 
-              ` (Category ${patientData.queue_position.category})`}
+              ` (${numberFormat(patientData.queue_position.category)} in category)`}
           </p>
           {currentWaitTime > ESTIMATED_WAIT_TIMES[patientData?.triage_category] && (
-            <p className="text-red-500 text-xs mt-1">
+            <p className="text-red-500 text-xs mt-1 bolded-color">
               ⚠️ Wait time exceeded estimate
             </p>
           )}

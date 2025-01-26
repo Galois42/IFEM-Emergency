@@ -10,6 +10,10 @@ import WhiteMenu from './assets/white_menu.png';
 import io from 'socket.io-client';
 import './App.css';
 import BreathingGuide from './components/BreathingGuide';
+import PhaseTracker from './components/PhaseTracker';
+import { Heart } from 'lucide-react';
+import BackgroundDefault from './assets/hospital_background2.jpg';
+import CombatBackground from './assets/hospital_background.jpg';
 
 const App = () => {
   const [patientId, setPatientId] = useState('');
@@ -19,14 +23,17 @@ const App = () => {
   const [playingGame, setPlayingGame] = useState(false);
   const [chatting, setChatting] = useState(false);
   const [breathingExercice, setBreathingExercice] = useState(false);
+  const [phaseTracker, setPhaseTracker] = useState(false);
   const [matchId, setMatchId] = useState(null);
+  const [displayMainPage, setDisplayMainPage] = useState(true);
+  const [backgroundUrl, setBackgroundUrl] = useState(BackgroundDefault)
 
   const [isStarted, setIsStarted] = useState(false);
   const [hairColor, setHairColor] = useState('Red');
   const [isLandscape, setIsLandscape] = useState(window.innerWidth > window.innerHeight);
   const [isEnd, setIsEnd] = useState(false);
   const [endResult, setEndResult] = useState('');
-  const [isVisible, setIsVisible] = useState(window.innerWidth >= 900);
+  const [isVisible, setIsVisible] = useState(false);
   const [socket, setSocket] = useState(null);
   
     const handleResize = () => {
@@ -55,6 +62,7 @@ const App = () => {
     setIsVisible(true);
     setIsEnd(false);
     setIsStarted(false);
+    setBackgroundUrl(BackgroundDefault);
   }
 
   const onRestart = () => {
@@ -80,6 +88,7 @@ const App = () => {
         setPlayingGame(false);
         setBreathingExercice(false);
         setIsVisible(false);
+        setBackgroundUrl(BackgroundDefault);
       }
     });
 
@@ -97,6 +106,7 @@ const App = () => {
   }, []);
 
   const fetchPatientData = async () => {
+    setAppFeatures();
     try {
       const response = await fetch(`http://localhost:5000/api/patient/${patientId}`);
       if (!response.ok) {
@@ -113,6 +123,10 @@ const App = () => {
     }
   };
 
+  const setAppFeatures = () => {
+    setDisplayMainPage(false);
+  }
+
   const findMatch = (activity) => {
     setMatchStatus('Looking for a match...');
     console.log(activity);
@@ -120,24 +134,32 @@ const App = () => {
     setChatting(false);
     setPlayingGame(false);
     setIsVisible(false);
+    setBackgroundUrl(BackgroundDefault);
     socket.emit('find_match', activity);
   };
 
   const breathingGuide = () => {
-    console.log("breathing");
     setBreathingExercice(true);
     setChatting(false);
     setPlayingGame(false);
     setIsVisible(false);
+    setMatchStatus('');
+    setBackgroundUrl(BackgroundDefault);
   }
 
   const playGame = () => {
-    console.log('play game');
     setPlayingGame(true);
     setMatchStatus('');
     setChatting(false);
     setBreathingExercice(false);
     setIsVisible(false);
+    setBackgroundUrl(CombatBackground)
+  }
+
+  const togglePhaseTracker = () => {
+    console.log('toggle')
+    setPhaseTracker(!phaseTracker);
+    console.log(patientData);
   }
 
   return (
@@ -156,7 +178,7 @@ const App = () => {
         zIndex: 1000 // Ensure it's above other content
       }}>
         <header className="header">
-          <h1 className="title">ED Companion</h1>
+          <h1 className="title">SerenED</h1>
         </header>
 
         <div className="input-container">
@@ -179,7 +201,7 @@ const App = () => {
         {patientData && (
           <>
             <div className="input-container">
-              <DynamicSyringe patientData={patientData} />
+              <DynamicSyringe patientData={patientData} togglePhaseTracker={togglePhaseTracker} />
             </div>        
 
             <div className="activity-grid">
@@ -192,15 +214,14 @@ const App = () => {
               </button>
               <button
                 onClick={() => playGame()}
-                className="button"
-                style={{ backgroundColor: '#00cc66' }}
+                className="button play-game-button"
               >
                 Play a Game
               </button>
               <button
                 onClick={() => breathingGuide()}
-                className="button"
-                style={{ backgroundColor: '#cc00cc' }}
+                className="button breathing-exercice-button"
+                
               >
                 Breathing Exercices
               </button>
@@ -209,7 +230,20 @@ const App = () => {
         )}
         </div>
 
-      <div className="app-container">
+      <div className="app-container" style={{ backgroundImage: `url(${backgroundUrl})`}}>
+        <div 
+          className='main-page-display' 
+          style={{ 
+            all: displayMainPage ? '' : 'unset'
+          }}>
+          <div>
+            <div className="main-header" style={{ display: displayMainPage ? 'block' : 'none' }}>
+              <div className="heart-logo" style={{ display: displayMainPage ? 'block' : 'none' }}>
+                <Heart size={48} fill="#ff6b6b" stroke="#ff6b6b" />
+              </div>
+              <h1 className="title" style={{ display: displayMainPage ? 'block' : 'none' }}>SerenED</h1>
+            </div>
+          </div>
       {playingGame &&
         (
           <div>
@@ -251,9 +285,16 @@ const App = () => {
           {matchStatus}
         </p>
       )}
+      {phaseTracker &&
+        <PhaseTracker currentPhase={patientData.status.current_phase} />
+      }
+    </div>
     </div>
     </div>
   );
 }
+
+// pale pink #ffb3b3
+// red #ff4b6b
 
 export default App;

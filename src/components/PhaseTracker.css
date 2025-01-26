@@ -1,0 +1,37 @@
+/* PhaseTracker.css */
+.phase-tracker-container {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 20px;
+  }
+  
+  .phase-circle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background-color: #ffb3b3;
+    color: #fff;
+    text-align: center;
+    cursor: pointer;
+    font-size: 12px;
+    transition: transform 0.3s ease-in-out;
+    margin: 10px;
+  }
+  
+  .phase-circle.active {
+    background-color: #ff4b6b; /* Color for the active phase */
+    font-size: 14px;
+    font-weight: bold;
+  }
+  
+  .phase-label {
+    margin: 0;
+    padding: 5px;
+    font-size: 12px;
+    word-wrap: break-word;
+  }
+  

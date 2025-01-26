@@ -1,0 +1,19 @@
+.information-bubble {
+    margin-left: 10px;
+}
+
+.phase-status {
+    align-self: center;
+    font-weight: bold;
+}
+
+.container-phase {
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+}
+
+.bolded-color {
+    color: white;
+    font-weight: bold;
+}

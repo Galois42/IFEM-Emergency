@@ -1,25 +1,60 @@
 /* src/App.css */
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap');
+
+* {
+  font-family: 'Quicksand', sans-serif;
+  box-sizing: border-box;
+}
+
+@keyframes bgPulse {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.main-header {
+  padding: 2rem;
+  position: relative;
+  text-align: center;
+}
+
+.heart-logo {
+  font-size: 2.5rem;
+  color: #ff6b6b;
+  animation: heartbeat 1.5s ease-in-out infinite;
+  margin-bottom: 1rem;
+}
+
+@keyframes heartbeat {
+  0% { transform: scale(1); }
+  25% { transform: scale(1.1); }
+  40% { transform: scale(1); }
+  60% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
 
 .left-container {
   min-height: 100vh;
   max-width: 480px;
   padding: 20px;
-  background-color: #1a1a1a;
+  background: rgba(255, 255, 255, 0.9);
   color: white;
   box-sizing: border-box;
+  
 }
 
 .header {
-  background-color: #242424;
+  background-color: #ffb3b3;
   padding: 8px;
-  border-bottom: 2px solid #0066cc;
+  border-bottom: 2px solid #ff4b6b;
   margin-bottom: 20px;
 }
 
 .title {
   font-size: 2rem;
-  font-weight: bold;
-  color: #0066cc;
+  font-weight: 700;
+  color: #ff4b6b;
+  text-shadow: 2px 2px 4px rgba(255, 107, 107, 0.2);
   text-align: center;
 }
 
@@ -27,7 +62,7 @@
   max-width: 400px;
   margin: 0 auto;
   padding: 10px;
-  background-color: #242424;
+  background-color: #ffb3b3;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
@@ -36,17 +71,16 @@
   width: 100%;
   padding: 8px 16px;
   margin-bottom: 16px;
-  border: 1px solid #0066cc;
+  border: 1px solid #ff4b6b;
   border-radius: 4px;
-  background-color: #1a1a1a;
-  color: white;
-  box-sizing: border-box;
+  background-color: rgba(255, 255, 255, 0.9);
+  color: black;
 }
 
 .button {
   width: 100%;
   padding: 8px 16px;
-  background-color: #0066cc;
+  background: linear-gradient(45deg, #ff6b6b, #ff4b6b);
   color: white;
   border: none;
   border-radius: 4px;
@@ -76,14 +110,22 @@
 
 .menu {
   position: absolute;
-  top: 0;
-  left: 0;
+  top: 10px;
+  left: 10px;
   transform: scale(0.5);
   z-index: 10000;
 }
 
 .menu.open {
   display: block;
+}
+
+.breathing-exercice-button {
+  background: #ffb3b3 !important;
+}
+
+.play-game-button {
+  background: #f78686 !important;
 }
 
 /* @media (min-width: 900px) {
@@ -120,15 +162,9 @@
   }
 }
 
-/* .screen-container {
-  display: flex;
-  justify-content: center;
-} */
 
 .screen-container {
   display: flex;
-  /* justify-content: center; */
-  /* align-items: center; */
   flex-direction: row; /* Aligns items horizontally */
   width: 100vw; /* Full viewport width */
   height: 100vh; /* Full viewport height */
@@ -142,8 +178,16 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-image: url('./assets/hospital_background.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+}
+
+.main-page-display {
+  background: linear-gradient(135deg, #ffe5e5 0%, #fff1f1 50%, #ffe5e5 100%);
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
