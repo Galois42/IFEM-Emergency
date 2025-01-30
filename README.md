@@ -10,8 +10,8 @@ SerenED revolutionizes the emergency department waiting experience through three
 
 - A dynamic, heart-themed syringe visualization that provides real-time updates on wait times and patient status
 - A customizable Parent vs. Illness fighting mini-game in classic Mortal Kombat style, cleverly designed so parents always emerge victorious, subtly reinforcing to anxious children that their guardians will triumph over any illness.
-- An interactive social system allowing patients to connect through chat with others in similar situations
-Engaging activities including games and guided breathing exercises to reduce anxiety
+- An interactive social system allowing patients to connect through chat with others in similar situations through severity and wait time based matchmaking.
+- Guided breathing exercises with relaxing music to reduce anxiety.
 
 ## How we built it
 We developed SereneED using a modern tech stack focused on real-time interaction:
