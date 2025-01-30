@@ -9,7 +9,7 @@ Emergency departments are places of intense emotions and uncertainty. After anal
 SerenED revolutionizes the emergency department waiting experience through three core features:
 
 - A dynamic, heart-themed syringe visualization that provides real-time updates on wait times and patient status
-- A minigame to get your kids occupied for a while.
+- A customizable Parent vs. Illness fighting mini-game in classic Mortal Kombat style, cleverly designed so parents always emerge victorious, subtly reinforcing to anxious children that their guardians will triumph over any illness.
 - An interactive social system allowing patients to connect through chat with others in similar situations
 Engaging activities including games and guided breathing exercises to reduce anxiety
 
@@ -42,9 +42,3 @@ Frontend: React for a responsive, elegant UI
 - Strategies for creating engaging visualizations.
 - Methods for balancing technical functionality with emotional design.
 - The complexity of building social features within healthcare constraints.
-
-## What's next for SerenED
-- Integration with hospital EMR systems for more accurate wait time predictions.
-- Native mobile app development for improved accessibility
-- Advanced analytics to help hospitals optimize patient flow
-- Partnership opportunities with healthcare providers for real-world implementation
