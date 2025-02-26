@@ -5,7 +5,7 @@
 
 🔗 You can find an overview of the project on Devpost: https://devpost.com/software/sereneed
 
-📱 Watch a demonstration of the project in action! : https://www.youtube.com/watch?v=ZDmFJplDQQc&ab_channel=CedricGarand
+🎬 Watch a demonstration of the project in action! : https://www.youtube.com/watch?v=ZDmFJplDQQc&ab_channel=CedricGarand
 
 ## 💡 Inspiration
 Emergency departments are places of intense emotions and uncertainty. After analyzing the widespread problem of waiting room anxiety and reading about countless patient experiences, we were inspired to create a solution that transforms passive waiting time into an engaging, supportive experience. The realization that technology could bridge the gap between necessary wait times and patient wellbeing drove us to develop SerenED, turning a traditionally stressful experience into meaningful moments of connection and comfort.
