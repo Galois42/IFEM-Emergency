@@ -3,7 +3,7 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-4.0+-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![CSS3](https://img.shields.io/badge/CSS3-1572B6?logo=css3&logoColor=white)](https://www.w3.org/Style/CSS/)
 
-You can find an overview of the project on our Devpost: https://devpost.com/software/sereneed
+You can find an overview of the project on Devpost: https://devpost.com/software/sereneed
 
 Watch a demonstration of the project in action! : https://www.youtube.com/watch?v=ZDmFJplDQQc&ab_channel=CedricGarand
 
