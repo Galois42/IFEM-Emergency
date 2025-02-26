@@ -1,3 +1,5 @@
+# 🧠 SerenED: Transforming Emergency Department Waiting Experiences
+
 [![React](https://img.shields.io/badge/React-18.0+-61DAFB?logo=react&logoColor=white)](https://reactjs.org/)
 [![JavaScript](https://img.shields.io/badge/JavaScript-ES6+-F7DF1E?logo=javascript&logoColor=black)](https://www.javascript.com/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-4.0+-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
@@ -10,7 +12,7 @@
 ## 💡 Inspiration
 Emergency departments are places of intense emotions and uncertainty. After analyzing the widespread problem of waiting room anxiety and reading about countless patient experiences, we were inspired to create a solution that transforms passive waiting time into an engaging, supportive experience. The realization that technology could bridge the gap between necessary wait times and patient wellbeing drove us to develop SerenED, turning a traditionally stressful experience into meaningful moments of connection and comfort.
 ## ⚡ What it does
-🧠 SerenED revolutionizes the emergency department waiting experience through three core features:
+SerenED revolutionizes the emergency department waiting experience through three core features:
 
 - 💉 A dynamic, heart-themed syringe visualization that provides real-time updates on wait times and patient status
 - 🎮 A customizable Parent vs. Illness fighting mini-game in classic Mortal Kombat style, cleverly designed so parents always emerge victorious, subtly reinforcing to anxious children that their guardians will triumph over any illness.
